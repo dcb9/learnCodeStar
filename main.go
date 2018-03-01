@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"io/ioutil"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -10,7 +12,8 @@ import (
 // Handler is executed by AWS Lambda in the main function. Once the request
 // is processed, it returns an Amazon API Gateway response object to AWS Lambda
 func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-
+	bs, _ := json.MarshalIndent(request, "", "  ")
+	fmt.Println(string(bs))
 	index, err := ioutil.ReadFile("public/index.html")
 	if err != nil {
 		return events.APIGatewayProxyResponse{}, err
